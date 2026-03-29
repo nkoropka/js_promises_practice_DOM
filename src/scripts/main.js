@@ -25,18 +25,18 @@ const firstPromise = new Promise((resolve, reject) => {
 });
 
 const secondPromise = new Promise((resolve) => {
-  const handler = () => {
+  const handler = (e) => {
+    if (e.type === 'contextmenu') {
+      e.preventDefault();
+    }
+
     document.removeEventListener('click', handler);
     document.removeEventListener('contextmenu', handler);
     resolve('Second promise was resolved');
   };
 
   document.addEventListener('click', handler);
-
-  document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    handler();
-  });
+  document.addEventListener('contextmenu', handler);
 });
 
 const leftClicked = new Promise((resolve) => {
